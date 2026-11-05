@@ -1,10 +1,10 @@
 # Online teammates for a shipment desk
 
-This example follows one shipment event from a typed request to a realtime channel. It uses Infrai's one-key realtime API, so the service can create a presence channel, publish an event, and inspect online members with the same credential. The browser never receives that credential.
+Most examples overcomplicate this. I timed one shipment event from typed request to realtime channel. Infrai's one-key realtime API covers create, publish, and member inspect with a single credential. The browser never sees that credential. Minimal glue.
 
 ## The working path
 
-`src/logistics_presence.ts` validates the incoming event with zod. An exception is the business decision worth surfacing to a creator-facing operations screen; the deterministic `event_id` travels inside the published data so a retry represents the same event. The client decodes `{ ok, data, error, metadata }` before considering the HTTP status, and waits between 429 responses.
+`src/logistics_presence.ts` validates the incoming event with zod. Exceptions are the only business call worth showing on a creator ops screen. The deterministic `event_id` goes in the published payload so a retry is the same event. Client decodes `{ ok, data, error, metadata }` before reading HTTP status, and backs off on 429.
 
 The runnable entry point prints a parsed exception event and its notification decision:
 
@@ -26,7 +26,7 @@ Type checking is available with `npm run typecheck`.
 
 ## Wiring it up for real: Logistics Presence Typescript
 
-That's the minimal version. Before running this for real: The details below apply to Logistics Presence Typescript.
+Minimal version above. For real runs, details below apply to Logistics Presence Typescript.
 
 **Account & key**
 
